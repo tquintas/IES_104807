@@ -14,10 +14,12 @@ import weather.ipma_client.IpmaService;
 public class WeatherStarter {
     public static void main(String[] args ) {
         Scanner scanner = new Scanner(System.in);
-        while (true) {
+        boolean no_args = true;
+        while (no_args) {
             int CITY_ID = 0;
             try {
                 CITY_ID = Integer.parseInt(args[0]);
+                no_args = false;
             } catch (Exception ex) {
                 while (CITY_ID == 0) {
                     try {
