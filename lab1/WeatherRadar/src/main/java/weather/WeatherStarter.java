@@ -1,6 +1,8 @@
 package weather;
 
 import java.util.Scanner;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -12,7 +14,9 @@ import weather.ipma_client.IpmaService;
  * demonstrates the use of the IPMA API for weather forecast
  */
 public class WeatherStarter {
+    private static final Logger logger = LoggerFactory.getLogger(WeatherStarter.class);
     public static void main(String[] args ) {
+        logger.debug("Initiated program.");
         Scanner scanner = new Scanner(System.in);
         boolean no_args = true;
         while (no_args) {
@@ -27,7 +31,7 @@ public class WeatherStarter {
                         String id = scanner.nextLine();
                         if (id.equalsIgnoreCase("q")) {
                             System.out.println("Exiting...");
-                            scanner.close();
+                            logger.debug("Terminated program.");
                             return;
                         }
                         if (id.length() != 7) {
@@ -36,6 +40,7 @@ public class WeatherStarter {
                         CITY_ID = Integer.parseInt(id);
                     } catch (Exception e) {
                         System.out.println("Not a valid id! Enter another.");
+                        logger.error("Entered wrong input.", e);
                     }
                 }
             }
@@ -66,11 +71,14 @@ public class WeatherStarter {
                             maxTemp,
                             minTemp,
                             precipitation);
+                    logger.info(String.format("Got the forecast results for the city with id %d.", CITY_ID));
                 } else {
                     System.out.println("No results for this request!");
+                    logger.error(String.format("No results for the request with id %d.", CITY_ID), new NullPointerException("NullError"));
                 }
             } catch (Exception e) {
                 System.out.println(e.getMessage());
+                logger.debug("Program exited with internal error.");
             }
         }
     }
