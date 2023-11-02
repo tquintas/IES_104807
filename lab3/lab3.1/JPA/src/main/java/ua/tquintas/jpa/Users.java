@@ -17,7 +17,6 @@ public class Users {
     @NotBlank(message = "Name is mandatory")
     private String name;
     @Email(message = "Email should be valid")
-    @NotBlank(message = "Email is mandatory")
     private String email;
     @Min(value = 0, message = "Age should not be less than 0")
     @Max(value = 150, message = "Age should not be greater than 150")
@@ -42,5 +41,8 @@ public class Users {
     }
     public void setName(String name) {
         this.name = name;
+    }
+    public void setId(long id) {
+        this.id = id;
     }
 }
